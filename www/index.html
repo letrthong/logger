@@ -2,39 +2,91 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<style>
+div {
+    height: 600px;
+    width: 75%;
+    background-color: lightsteelblue;
+	overflow: scroll;
+}
+</style>
 </head>
 <body>
 
-
-<textarea id="idTextarea" rows="20" cols="80">
+<div id="idScroll" onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
+<pre id="idTextarea"  width="30" hight="80">
 ...
-</textarea>
+</pre>
+</div>
 <br><br>
 <button type="button" onclick="clickButtonStart()"> Start </button>
-<button type="button" onclick="clickButtonStop()"> Stop </button>
+<button type="button" onclick="clickButtonStop()">  Stop </button>
 <button type="button" onclick="clickButtonClear()"> Clear </button>
 
-	
 <script>
-	var flag = 0;  
+	var txt = "";
+	var flag = 1;
+	var num   = 0;
+	var scroll = 0
+	var myVar = setInterval(myTimer, 10);
+	var mousemove = 1;
+
+	function myTimer() {
+		if(flag == 0){
+			httpRequest();
+			console.log('number = '+ num);
+			num = num +1;
+
+			scroll++;
+			if(scroll >= 10){
+			scroll =0;
+			updateScroll();
+			}
+		}
+	}
+	
 	
 	function  clickButtonStart() {
-		$.get("/hello", function(data, status){
-			 document.getElementById("idTextarea").innerHTML = data;
-		 });					
+		flag = 0;
+	}
+    
+	function httpRequest()
+	{	
+		$.get("./hello")
+			.done(function( data ) {
+			 var d = new Date();
+			 txt = txt +"\n" + d.toLocaleTimeString()+ ": " + data + " " + num.toString();;
+			 document.getElementById("idTextarea").innerHTML = txt;
+			 //console.log('lenght = '+ txt.length);
+		});	
 	}
 	
-
+ 
 	function  clickButtonStop() {
-		document.getElementById("idTextarea").innerHTML = "stop";
 		flag = 1;
 	}
-	
 	
 	function  clickButtonClear() {
 		document.getElementById("idTextarea").innerHTML = "";
 	}
+    
+	function updateScroll()
+	{
+		if(mousemove == 1){
+			var mydiv = $("#idScroll");
+		 	mydiv.scrollTop(mydiv.prop("scrollHeight"));
+		}
+		
+	}
 	
+	function CallMouseMove() {
+		 mousemove = 0;
+	}
+
+	function CallMouseOut() {
+       mousemove = 1;
+	}
 	
 </script>
 </body>
