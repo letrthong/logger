@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+<textarea id="idTextarea" rows="20" cols="80">
+...
+</textarea>
+<br><br>
+<button type="button" onclick="clickButtonStart()"> Start </button>
+<button type="button" onclick="clickButtonStop()"> Stop </button>
+<button type="button" onclick="clickButtonClear()"> Clear </button>
+
+	
+<script>
+	var flag = 0;  
+	
+	function  clickButtonStart() {
+		$.get("/hello", function(data, status){
+			 document.getElementById("idTextarea").innerHTML = data;
+		 });					
+	}
+	
+
+	function  clickButtonStop() {
+		document.getElementById("idTextarea").innerHTML = "stop";
+		flag = 1;
+	}
+	
+	
+	function  clickButtonClear() {
+		document.getElementById("idTextarea").innerHTML = "";
+	}
+	
+	
+</script>
+</body>
+</html>
