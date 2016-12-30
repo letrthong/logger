@@ -3,91 +3,129 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+<script  type="text/javascript" src="js/FileSaver.js" ></script>
+	
 <style>
 div {
     height: 600px;
     width: 75%;
-    background-color: lightsteelblue;
+    background-color: black;
+	color: white;
 	overflow: scroll;
 }
+	
+font {
+	 background-color: #808000 ;
+}
+
 </style>
 </head>
 <body>
 
 <div id="idScroll" onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
-<pre id="idTextarea"  width="30" hight="80">
-...
+<pre id="idTextarea" >
 </pre>
 </div>
 <br><br>
 <button type="button" onclick="clickButtonStart()"> Start </button>
 <button type="button" onclick="clickButtonStop()">  Stop </button>
+<button type="button" onclick="clickButtonSave()"> Save </button>
 <button type="button" onclick="clickButtonClear()"> Clear </button>
 
 <script>
 	var txt = "";
 	var flag = 1;
-	var num   = 0;
+	var num = 0;
 	var scroll = 0
-	var myVar = setInterval(myTimer, 10);
+	var timeout = 10;
+	var myVar = setInterval(myTimer, timeout);
 	var mousemove = 1;
 
 	function myTimer() {
-		if(flag == 0){
-			httpRequest();
-			console.log('number = '+ num);
-			num = num +1;
+	    if (flag == 0) {
+	        httpRequest();
+	        //console.log('number = '+ num);
+	        num = num + 1;
 
-			scroll++;
-			if(scroll >= 10){
-			scroll =0;
-			updateScroll();
-			}
-		}
+	        scroll++;
+	        if (scroll >= 10) {
+	            scroll = 0;
+	            updateScroll();
+	        }
+	    }
+	}
+
+	function clickButtonStart() {
+	    flag = 0;
+	}
+
+	function httpRequest() {
+	    $.get("./hello")
+	        .done(function(data) {
+	            var d = new Date();
+	            var newline = num.toString() + " " + d.toLocaleTimeString() + ": " + data;
+	            if (num % 5 == 0) {
+	                txt = txt + "<font>" + newline + "</font>";
+	            } else {
+	                txt = txt + newline;
+	            }
+	            txt = txt + "\n"
+				
+				if(num % (timeout*10)== 0)
+				{
+					 document.getElementById("idTextarea").innerHTML = txt;
+				}
+	            //console.log('lenght = '+ txt.length);
+	        });
+	}
+
+	function clickButtonStop() {
+	    flag = 1;
+	}
+
+	function clickButtonClear() {
+	    document.getElementById("idTextarea").innerHTML = "";
+	    num = 0;
 	}
 	
-	
-	function  clickButtonStart() {
-		flag = 0;
-	}
-    
-	function httpRequest()
-	{	
-		$.get("./hello")
-			.done(function( data ) {
-			 var d = new Date();
-			 txt = txt +"\n" + d.toLocaleTimeString()+ ": " + data + " " + num.toString();;
-			 document.getElementById("idTextarea").innerHTML = txt;
-			 //console.log('lenght = '+ txt.length);
-		});	
-	}
-	
- 
-	function  clickButtonStop() {
-		flag = 1;
-	}
-	
-	function  clickButtonClear() {
-		document.getElementById("idTextarea").innerHTML = "";
-	}
-    
-	function updateScroll()
+	function clickButtonSave()
 	{
-		if(mousemove == 1){
-			var mydiv = $("#idScroll");
-		 	mydiv.scrollTop(mydiv.prop("scrollHeight"));
-		}
+		var text =txt;
+		txt = "";
+		num = 0;
 		
+		text = replaceAll("<font>", "", text);
+		text = replaceAll("</font>", "", text);
+		
+		var d = new Date();
+		var filename = d.toLocaleTimeString() + "-" + d.toLocaleDateString()   + "-Logger"
+		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+		saveAs(blob, filename+".txt");
 	}
 	
+	function updateScroll() {
+	    if (mousemove == 1) {
+	        var mydiv = $("#idScroll");
+	        mydiv.scrollTop(mydiv.prop("scrollHeight"));
+	    }
+	}
+
 	function CallMouseMove() {
-		 mousemove = 0;
+	    mousemove = 0;
 	}
 
 	function CallMouseOut() {
-       mousemove = 1;
+	    mousemove = 1;
 	}
 	
+	 function replaceAll(find, replace, str) 
+    {
+      while( str.indexOf(find) > -1)
+      {
+        str = str.replace(find, replace);
+      }
+      return str;
+    }
 </script>
 </body>
 </html>
