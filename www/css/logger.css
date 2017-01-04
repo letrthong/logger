@@ -4,7 +4,7 @@ font {
 
 .div0 { 
     height: 30px;
-    width: 75%;
+    width: 70%;
     background-color: green;
 	color: white;
 }
@@ -12,7 +12,7 @@ font {
 
 .div1 { 
     height: 600px;
-    width: 75%;
+    width: 70%;
     background-color: black;
 	color: white;
 	overflow: scroll;
@@ -22,6 +22,17 @@ font {
 
     position: absolute;
     right: 0px;
-    width: 20%;
+    width: 25%;
     top: 10px;
+    height: 200px;
 }
+
+
+.div3{
+
+    position: absolute;
+    right: 0px;
+    width: 25%;
+    top: 220px;
+}
+

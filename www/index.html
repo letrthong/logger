@@ -27,20 +27,29 @@
 
 <div class="div2">
 	<select id="mySelect"></select>
-	<input type="checkbox" id="checkbox"> info
+	<input type="checkbox" id="checkbox"> info <br>
+	<input type="text" > 
+	<button type="button" onclick="clickButtonSearch()" > Search </button>
 </div>
-<br><br>
+
+<div class="div3">
+	<pre id="idTextSearch" ></pre>
+</div>
+
 
 <script>
     
     var myscroll = new mouseScroll("idScroll");
     var myview   = new viewText("idTextarea");
     var mymodel  = new ModelText("/api");
+     
+
+    var myresults  = new viewText("idTextSearch");
 
 	var txt = "";
 	var flag = 1;
 	var num = 0;
-	setInterval(myTimer, 10);
+	setInterval(myTimer, 2);
 	setInterval(refreshUI,100);
 	
 	function refreshUI(){
@@ -74,8 +83,12 @@
 	    num = 0;
 	}
 	
-	function clickButtonSave()
-	{
+
+	function clickButtonSearch(){
+		myresults.updateTxt("No Found\n");
+	}
+
+	function clickButtonSave(){
 		var text =txt;
 		txt = "";
 		num = 0;
