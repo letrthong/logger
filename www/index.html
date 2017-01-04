@@ -26,26 +26,23 @@
 
 <script>
     
-    var scrolldiv = new mouseScroll("idScroll");
+    var myscroll = new mouseScroll("idScroll");
+    var view     = new viewText("idTextarea");
 
 	var txt = "";
 	var flag = 1;
 	var num = 0;
-	var scroll = 0
-	var timeout = 10;
-	var myVar = setInterval(myTimer, timeout);
-	var mousemove = 1;
-
+	var myVar = setInterval(myTimer, 10);
+	
 	function myTimer() {
+
 	    if (flag == 0) {
 	        httpRequest();
-	        //console.log('number = '+ num);
+
 	        num = num + 1;
 
-	        scroll++;
-	        if (scroll >= 10) {
-	            scroll = 0;
-	            updateScroll();
+	        if (num %10 ==0) {
+	            myscroll.updateScroll(); 
 	        }
 	    }
 	}
@@ -64,13 +61,12 @@
 	            } else {
 	                txt = txt + newline;
 	            }
-	            txt = txt + "\n"
+	            txt = txt + "\n";
 				
-				if(num % (timeout*10)== 0)
-				{
-					 document.getElementById("idTextarea").innerHTML = txt;
+
+				if(num % 100 == 0){
+					view.updateTxt(txt);
 				}
-	            //console.log('lenght = '+ txt.length);
 	        });
 	}
 
@@ -79,7 +75,7 @@
 	}
 
 	function clickButtonClear() {
-	    document.getElementById("idTextarea").innerHTML = "";
+	    view.clearTxt();
 	    num = 0;
 	}
 	
@@ -98,16 +94,14 @@
 		saveAs(blob, filename+".txt");
 	}
 	
-	function updateScroll() {
-	    scrolldiv.updateScroll();
-	}
+	
 
 	function CallMouseMove() {
-	    scrolldiv.stopScroll();
+	    myscroll.stopScroll();
 	}
 
 	function CallMouseOut() {
-	     scrolldiv.startScroll();
+	     myscroll.startScroll();
 	}
 	
 </script>
