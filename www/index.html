@@ -29,7 +29,7 @@
 	<select id="mySelect"></select>  <br>
 	<input type="checkbox" id="checkbox"> info 
 	<input type="checkbox" id="checkbox1"> Warn <br>
-	<input type="text" > 
+	<input type="text" id="idTxtInput" >  
 	<button type="button" onclick="clickButtonSearch()" > Search </button>
 </div>
 
@@ -86,7 +86,29 @@
 	
 
 	function clickButtonSearch(){
-		myresults.updateTxt("No Found\n");
+		var doc = document.getElementById("idTxtInput")
+
+		 if(txt == "" || doc.value == "" ){
+		 	myresults.updateTxt("Not Found");
+		 	return;
+		 }
+ 
+         myresults.updateTxt("search ....\n");
+		 
+		 
+		 if(doc.value != ""){
+		 	var array = txt.split("\n");
+		 	var result = "";
+
+		 	for(i =0 ; i< array.length ; i++){
+		 			if(array[i].toUpperCase().indexOf(doc.value.toUpperCase()) >= 0)
+		 			{
+		 				result =result + array[i]  + "\n";
+		 			}
+		 	}
+		 	myresults.updateTxt(result);
+		 }
+		
 	}
 
 	function clickButtonSave(){

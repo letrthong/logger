@@ -3,10 +3,13 @@ font {
 }
 
 .div0 { 
-    height: 30px;
-    width: 70%;
-    background-color: green;
-	color: white;
+     position: absolute;
+    right: 0px;
+    width: 25%;
+    top: 220px;
+    overflow: scroll;
+    height: 400px; 
+
 }
 
 
@@ -30,9 +33,10 @@ font {
 
 .div3{
 
-    position: absolute;
-    right: 0px;
-    width: 25%;
-    top: 220px;
+    height: 150px;
+    width: 70%;
+    background-color: lightblue;
+    color: white;
+    overflow: scroll;
 }
 
