@@ -29,7 +29,7 @@
 	<select id="mySelect"></select>  <br>
 	<input type="checkbox" id="checkbox"> info 
 	<input type="checkbox" id="checkbox1"> Warn <br>
-	<input type="text" id="idTxtInput" >  
+	<input type="text" id="idTxtInput"  onkeypress="handleKeyPress(event)" >  
 	<button type="button" onclick="clickButtonSearch()" > Search </button>
 </div>
 
@@ -110,6 +110,14 @@
 		 }
 		
 	}
+  
+    function handleKeyPress(e){
+	 var key=e.keyCode || e.which;
+	  if (key==13){
+	     clickButtonSearch();
+	  }
+	}
+
 
 	function clickButtonSave(){
 		var text =txt;
