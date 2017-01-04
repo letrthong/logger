@@ -14,36 +14,40 @@
 </head>
 <body>
 
-<div id="idScroll" onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
-<pre id="idTextarea" >
-</pre>
+<div class="div0" >
+	<button type="button" onclick="clickButtonStart()"> Start </button>
+	<button type="button" onclick="clickButtonStop()">  Stop </button>
+	<button type="button" onclick="clickButtonSave()"> Save </button>
+	<button type="button" onclick="clickButtonClear()"> Clear </button>
+</div>
+
+<div class="div1"  id="idScroll" onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
+	<pre id="idTextarea" ></pre>
 </div>
 <br><br>
-<button type="button" onclick="clickButtonStart()"> Start </button>
-<button type="button" onclick="clickButtonStop()">  Stop </button>
-<button type="button" onclick="clickButtonSave()"> Save </button>
-<button type="button" onclick="clickButtonClear()"> Clear </button>
 
 <script>
     
     var myscroll = new mouseScroll("idScroll");
-    var view     = new viewText("idTextarea");
+    var myview   = new viewText("idTextarea");
 
 	var txt = "";
 	var flag = 1;
 	var num = 0;
-	var myVar = setInterval(myTimer, 10);
+	setInterval(myTimer, 10);
+	setInterval(refreshUI,100);
 	
+	function refreshUI(){
+		if(flag == 0){
+			 myscroll.setscrollTop(num); 
+		}
+	}
+
 	function myTimer() {
 
 	    if (flag == 0) {
 	        httpRequest();
-
 	        num = num + 1;
-
-	        if (num %10 ==0) {
-	            myscroll.updateScroll(); 
-	        }
 	    }
 	}
 
@@ -52,22 +56,21 @@
 	}
 
 	function httpRequest() {
-	    $.get("./hello")
-	        .done(function(data) {
-	            var d = new Date();
-	            var newline = num.toString() + " " + d.toLocaleTimeString() + ": " + data;
-	            if (num % 5 == 0) {
-	                txt = txt + "<font>" + newline + "</font>";
-	            } else {
-	                txt = txt + newline;
-	            }
-	            txt = txt + "\n";
-				
 
-				if(num % 100 == 0){
-					view.updateTxt(txt);
-				}
-	        });
+		var data = "ThongLT";
+		var d = new Date();
+		var newline = num.toString() + " " + d.toLocaleTimeString() + ": " + data;
+		if (num % 10 == 0) {
+		    txt = txt + "<font>" + newline + "</font>";
+		} else {
+		    txt = txt + newline;
+		}
+
+		txt = txt + "\n";
+		if(num % 100 == 0){
+			myview.updateTxt(txt);
+		}
+
 	}
 
 	function clickButtonStop() {
@@ -75,7 +78,7 @@
 	}
 
 	function clickButtonClear() {
-	    view.clearTxt();
+	    myview.clearTxt();
 	    num = 0;
 	}
 	

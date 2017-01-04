@@ -126,7 +126,15 @@ function mouseScroll(id){
 
     this.updateScroll = function(){
         if (this.move == 0) {
-            //this.doc.scrollTop + = 100;
+            this.doc.scrollTop += 500;
+            console.log("\nupdateScroll scroll=" + this.doc.scrollTop);
+        }
+     };
+
+     this.setscrollTop = function(line){
+        if (this.move == 0) {
+            this.doc.scrollTop = line*18 + 10000;
+            console.log("\nsetscrollTop scroll=" + this.doc.scrollTop);
         }
      };
 
