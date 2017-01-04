@@ -3,11 +3,10 @@ font {
 }
 
 .div0 { 
-    height: 40px;
+    height: 25px;
     width: 75%;
     background-color: green;
 	color: white;
-	overflow: scroll;
 }
 
 
@@ -17,4 +16,12 @@ font {
     background-color: black;
 	color: white;
 	overflow: scroll;
+}
+
+.div2{
+
+    position: absolute;
+    right: 0px;
+    width: 20%;
+    top: 10px;
 }

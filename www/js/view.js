@@ -134,7 +134,7 @@ function mouseScroll(id){
      this.setscrollTop = function(line){
         if (this.move == 0) {
             this.doc.scrollTop = line*18 + 10000;
-            console.log("\nsetscrollTop scroll=" + this.doc.scrollTop);
+            //console.log("\nsetscrollTop scroll=" + this.doc.scrollTop);
         }
      };
 

@@ -24,12 +24,18 @@
 <div class="div1"  id="idScroll" onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
 	<pre id="idTextarea" ></pre>
 </div>
+
+<div class="div2">
+	<select id="mySelect"></select>
+	<input type="checkbox" id="checkbox"> info
+</div>
 <br><br>
 
 <script>
     
     var myscroll = new mouseScroll("idScroll");
     var myview   = new viewText("idTextarea");
+    var mymodel  = new ModelText("/api");
 
 	var txt = "";
 	var flag = 1;
@@ -41,36 +47,21 @@
 		if(flag == 0){
 			 myscroll.setscrollTop(num); 
 		}
+
+		myview.updateTxt(txt);
 	}
 
 	function myTimer() {
-
-	    if (flag == 0) {
-	        httpRequest();
-	        num = num + 1;
+	    if (flag != 0) {
+	        return;
 	    }
+
+	    txt += mymodel.httpRequest(num);
+	    num = num + 1;
 	}
 
 	function clickButtonStart() {
 	    flag = 0;
-	}
-
-	function httpRequest() {
-
-		var data = "ThongLT";
-		var d = new Date();
-		var newline = num.toString() + " " + d.toLocaleTimeString() + ": " + data;
-		if (num % 10 == 0) {
-		    txt = txt + "<font>" + newline + "</font>";
-		} else {
-		    txt = txt + newline;
-		}
-
-		txt = txt + "\n";
-		if(num % 100 == 0){
-			myview.updateTxt(txt);
-		}
-
 	}
 
 	function clickButtonStop() {
@@ -79,6 +70,7 @@
 
 	function clickButtonClear() {
 	    myview.clearTxt();
+	    txt = "";
 	    num = 0;
 	}
 	
@@ -87,9 +79,6 @@
 		var text =txt;
 		txt = "";
 		num = 0;
-		
-		text = replaceAll("<font>", "", text);
-		text = replaceAll("</font>", "", text);
 		
 		var d = new Date();
 		var filename = d.toLocaleTimeString() + "-" + d.toLocaleDateString()   + "-Logger"
@@ -104,7 +93,7 @@
 	}
 
 	function CallMouseOut() {
-	     myscroll.startScroll();
+	    myscroll.startScroll();
 	}
 	
 </script>
