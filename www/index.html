@@ -4,21 +4,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script  type="text/javascript" src="js/FileSaver.js" ></script>
-	
-<style>
-div {
-    height: 600px;
-    width: 75%;
-    background-color: black;
-	color: white;
-	overflow: scroll;
-}
-	
-font {
-	 background-color: #808000 ;
-}
+<script  type="text/javascript" src="js/controller.js" ></script>
+<script  type="text/javascript" src="js/controller.js" ></script>
+<script  type="text/javascript" src="js/model.js" ></script>
+<script  type="text/javascript" src="js/view.js" ></script>
+<script  type="text/javascript" src="js/utils.js" ></script>
 
-</style>
+<link rel="stylesheet" type="text/css" href="css/logger.css">
 </head>
 <body>
 
@@ -33,6 +25,9 @@ font {
 <button type="button" onclick="clickButtonClear()"> Clear </button>
 
 <script>
+    
+    var scrolldiv = new mouseScroll("idScroll");
+
 	var txt = "";
 	var flag = 1;
 	var num = 0;
@@ -104,28 +99,17 @@ font {
 	}
 	
 	function updateScroll() {
-	    if (mousemove == 1) {
-	        var mydiv = $("#idScroll");
-	        mydiv.scrollTop(mydiv.prop("scrollHeight"));
-	    }
+	    scrolldiv.updateScroll();
 	}
 
 	function CallMouseMove() {
-	    mousemove = 0;
+	    scrolldiv.stopScroll();
 	}
 
 	function CallMouseOut() {
-	    mousemove = 1;
+	     scrolldiv.startScroll();
 	}
 	
-	 function replaceAll(find, replace, str) 
-    {
-      while( str.indexOf(find) > -1)
-      {
-        str = str.replace(find, replace);
-      }
-      return str;
-    }
 </script>
 </body>
 </html>
