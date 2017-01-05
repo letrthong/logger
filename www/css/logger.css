@@ -40,3 +40,11 @@ font {
     overflow: scroll;
 }
 
+.image1{
+    position: absolute;
+   
+    width: 25px;
+    right: 31%;
+    height: 25px;
+}
+

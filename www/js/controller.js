@@ -1,5 +1,3 @@
-
-
 function ControllerText(){
 	this.getData = function(id){
 		var view  = new  viewText("demo");
@@ -11,6 +9,5 @@ function ControllerText(){
 		var css = new StypeTxt(view.getDoc());
 		css.setBackgroundColor("lightblue");
 		css.setColor("red");
-		//css.setHidden();
 	};
 }
