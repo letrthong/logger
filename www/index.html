@@ -1,146 +1,154 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-<script  type="text/javascript" src="js/FileSaver.js" ></script>
-<script  type="text/javascript" src="js/controller.js" ></script>
-<script  type="text/javascript" src="js/controller.js" ></script>
-<script  type="text/javascript" src="js/model.js" ></script>
-<script  type="text/javascript" src="js/view.js" ></script>
-<script  type="text/javascript" src="js/utils.js" ></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script  type="text/javascript" src="js/FileSaver.js" ></script>
+	<script  type="text/javascript" src="js/controller.js" ></script>
+	<script  type="text/javascript" src="js/controller.js" ></script>
+	<script  type="text/javascript" src="js/model.js" ></script>
+	<script  type="text/javascript" src="js/view.js" ></script>
+	<script  type="text/javascript" src="js/utils.js" ></script>
+	<script  type="text/javascript" src="js/info.js" ></script>
+	<script  type="text/javascript" src="js/stype.js" ></script>
 
-<link rel="stylesheet" type="text/css" href="css/logger.css">
+	<link rel="stylesheet" type="text/css" href="css/logger.css">
 </head>
 <body>
+	<div class="parent" >
+		<div class="left">
+			<div class="div1"  id="div_txt"  onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
+				<pre id="idTextarea" ></pre>
+		 	</div>
+			<div class="div3" id="div_search" >
+				<img  class="image1" src="image/button/close.png"/> 
+				<pre id="idTextSearch" ></pre>
+			</div>
+		</div>
 
-<div class="div0" >
-	<button type="button" onclick="clickButtonStart()"> Start </button>
-	<button type="button" onclick="clickButtonStop()">  Stop </button>
-	<button type="button" onclick="clickButtonSave()"> Save </button>
-	<button type="button" onclick="clickButtonClear()"> Clear </button>
-</div>
+		<div class="right" >
+			<div class="div2">
+				<select id="mySelect"></select>  <br>
+				<input type="checkbox" id="checkbox"> info 
+				<input type="checkbox" id="checkbox1"> Warn <br>
+				<input type="text" id="idTxtInput"  onkeypress="handleKeyPress(event)" >  
+				<button type="button" onclick="clickButtonSearch()" > Search </button>
+			</div>
+			<div class="div0"  id="div_control" >
+				<button type="button" onclick="clickButtonStart()"> Start </button>
+				<button type="button" onclick="clickButtonStop()">  Stop </button>
+				<button type="button" onclick="clickButtonSave()"> Save </button>
+				<button type="button" onclick="clickButtonClear()"> Clear </button>
+			</div>
+		</div>
+	</div>
+	<script>
+	    
+	    var myscroll = new mouseScroll("div_txt");
+	    var myview   = new viewText("idTextarea");
+	    var mymodel  = new ModelText("/api");
+	    
+	    var myresults  = new viewText("idTextSearch");
 
-<div class="div1"  id="idScroll" onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
-	<pre id="idTextarea" ></pre>
-</div>
 
-<div class="div2">
-	<select id="mySelect"></select>  <br>
-	<input type="checkbox" id="checkbox"> info 
-	<input type="checkbox" id="checkbox1"> Warn <br>
-	<input type="text" id="idTxtInput"  onkeypress="handleKeyPress(event)" >  
-	<button type="button" onclick="clickButtonSearch()" > Search </button>
-</div>
+	    var myinfo   = new Info();
+	    var mydiv1   = new StypeTxt("div_txt");
+	    var mydiv3   = new StypeTxt("div_search");
+	   	mydiv1.setHight( (myinfo.getHeighOfScreen()*0.80) );
+	   	mydiv3.setHight( (myinfo.getHeighOfScreen()*0.15) );
+	   
+		var txt = "";
+		var flag = 1;
+		var num = 0;
+		setInterval(myTimer, 2);
+		setInterval(refreshUI,100);
+		
+		function refreshUI(){
+			if(flag == 0){
+				 myscroll.setscrollTop(num); 
+			}
 
-<div class="div3">
-	<img  class="image1" src="image/button/close.png"/> 
-	<pre id="idTextSearch" ></pre>
-</div>
-
-
-<script>
-    
-    var myscroll = new mouseScroll("idScroll");
-    var myview   = new viewText("idTextarea");
-    var mymodel  = new ModelText("/api");
-     
-
-    var myresults  = new viewText("idTextSearch");
-
-	var txt = "";
-	var flag = 1;
-	var num = 0;
-	setInterval(myTimer, 2);
-	setInterval(refreshUI,100);
-	
-	function refreshUI(){
-		if(flag == 0){
-			 myscroll.setscrollTop(num); 
+			myview.updateTxt(txt);
 		}
 
-		myview.updateTxt(txt);
-	}
+		function myTimer() {
+		    if (flag != 0) {
+		        return;
+		    }
 
-	function myTimer() {
-	    if (flag != 0) {
-	        return;
-	    }
+		    txt += mymodel.httpRequest(num);
+		    num = num + 1;
+		}
 
-	    txt += mymodel.httpRequest(num);
-	    num = num + 1;
-	}
+		function clickButtonStart() {
+		    flag = 0;
+		}
 
-	function clickButtonStart() {
-	    flag = 0;
-	}
+		function clickButtonStop() {
+		    flag = 1;
+		}
 
-	function clickButtonStop() {
-	    flag = 1;
-	}
-
-	function clickButtonClear() {
-	    myview.clearTxt();
-	    txt = "";
-	    num = 0;
-	}
-	
-
-	function clickButtonSearch(){
-		var doc = document.getElementById("idTxtInput")
-
-		 if(txt == "" || doc.value == "" ){
-		 	myresults.updateTxt("Not Found");
-		 	return;
-		 }
- 
-         myresults.updateTxt("search ....\n");
-		 
-		 
-		 if(doc.value != ""){
-		 	var array = txt.split("\n");
-		 	var result = "";
-
-		 	for(i =0 ; i< array.length ; i++){
-		 			if(array[i].toUpperCase().indexOf(doc.value.toUpperCase()) >= 0)
-		 			{
-		 				result =result + array[i]  + "\n";
-		 			}
-		 	}
-		 	myresults.updateTxt(result);
-		 }
+		function clickButtonClear() {
+		    myview.clearTxt();
+		    txt = "";
+		    num = 0;
+		}
 		
-	}
-  
-    function handleKeyPress(e){
-	 var key=e.keyCode || e.which;
-	  if (key==13){
-	     clickButtonSearch();
-	  }
-	}
+
+		function clickButtonSearch(){
+			var doc = document.getElementById("idTxtInput")
+
+			 if(txt == "" || doc.value == "" ){
+			 	myresults.updateTxt("Not Found");
+			 	return;
+			 }
+	 
+	         myresults.updateTxt("search ....\n");
+			 
+			 
+			 if(doc.value != ""){
+			 	var array = txt.split("\n");
+			 	var result = "";
+
+			 	for(i =0 ; i< array.length ; i++){
+			 			if(array[i].toUpperCase().indexOf(doc.value.toUpperCase()) >= 0)
+			 			{
+			 				result =result + array[i]  + "\n";
+			 			}
+			 	}
+			 	myresults.updateTxt(result);
+			 }
+		}
+	  
+	    function handleKeyPress(e){
+		 var key=e.keyCode || e.which;
+		  if (key==13){
+		     clickButtonSearch();
+		  }
+		}
 
 
-	function clickButtonSave(){
-		var text =txt;
-		txt = "";
-		num = 0;
+		function clickButtonSave(){
+			var text =txt;
+			txt = "";
+			num = 0;
+			
+			var d = new Date();
+			var filename = d.toLocaleTimeString() + "-" + d.toLocaleDateString()   + "-Logger"
+			var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+			saveAs(blob, filename+".txt");
+		}
 		
-		var d = new Date();
-		var filename = d.toLocaleTimeString() + "-" + d.toLocaleDateString()   + "-Logger"
-		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-		saveAs(blob, filename+".txt");
-	}
-	
-	
+		
+		function CallMouseMove() {
+		    myscroll.stopScroll();
+		}
 
-	function CallMouseMove() {
-	    myscroll.stopScroll();
-	}
-
-	function CallMouseOut() {
-	    myscroll.startScroll();
-	}
-	
-</script>
+		function CallMouseOut() {
+		    myscroll.startScroll();
+		}
+		
+	</script>
 </body>
 </html>

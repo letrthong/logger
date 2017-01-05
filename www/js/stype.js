@@ -1,5 +1,5 @@
-function StypeTxt(doc){
-	this.doc  = doc;
+function StypeTxt(id){
+	this.doc  = document.getElementById(id);
 
 	this.setBackgroundColor = function(color){
 		this.doc.style.backgroundColor = color;
@@ -10,7 +10,7 @@ function StypeTxt(doc){
 	};
 
 	this.setHight = function(hight){
-		this.doc.style.height = hight;///50px"
+		this.doc.style.height = hight+"px";//50"
 	};
 
 	this.getHight  = function(){
@@ -18,7 +18,7 @@ function StypeTxt(doc){
 	};
 
 	this.setwidth = function(width){
-		this.doc.style.width = width;///50px"
+		this.doc.style.width = width+"px";//50"
 	};
 
 	this.getWidth = function(){

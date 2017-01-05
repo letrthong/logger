@@ -2,39 +2,33 @@ font {
 	 background-color: #808000 ;
 }
 
-.div0 { 
-     position: absolute;
-    right: 0px;
-    width: 25%;
-    top: 220px;
-    overflow: scroll;
-    height: 400px; 
 
+
+div.parent{
+     width: 100%;     
+} 
+
+
+div.left{ 
+    width: 70%;
 }
 
+div.right{ 
+    right: 0px;
+    width: 25%;
+    top: 0px;
+    position: absolute;
+}
 
 .div1 { 
-    height: 600px;
-    width: 70%;
+    width: 100%;
     background-color: black;
 	color: white;
 	overflow: scroll;
 }
 
-.div2{
-
-    position: absolute;
-    right: 0px;
-    width: 25%;
-    top: 10px;
-    height: 200px;
-}
-
-
 .div3{
-
-    height: 150px;
-    width: 70%;
+    width: 100%;
     background-color: lightblue;
     color: blue;
     overflow: scroll;
@@ -46,5 +40,26 @@ font {
     width: 25px;
     right: 31%;
     height: 25px;
+    top :600px;
 }
+
+
+/*right*/
+.div0 { 
+    right: 0px;
+    width: 25%;
+    height: 400px; 
+
+}
+
+.div2{
+    right: 0px;
+    width: 25%;
+    top: 10px;
+    height: 200px;
+}
+
+
+
+
 
