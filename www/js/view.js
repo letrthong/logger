@@ -1,25 +1,29 @@
 
 
-function  viewText(id) {
+function  viewTextOutput(id) {
     this.id  = id;
     this.txt = "";
-    this.doc = document.getElementById(id);
+    this.pre_txt = "";
+    this.doc = document.getElementById(this.id);
 
     this.updateTxt = function(txt){
         this.setTxt(txt);
-        this.showTxt();
+        if(  this.pre_txt  != this.txt){
+            this.showTxt();
+            this.pre_txt = this.txt
+        }
     };
 
     this.setTxt = function(txt){
-        this.txt  =txt;
+        this.txt =txt;
     };
 
     this.showTxt = function(){
         this.doc.innerHTML = this.txt;
     };
 
-    this.getTxt= function() {
-        return  this.txt;
+    this.getTxt = function() {
+        return this.txt;
     };
 
     this.getDoc = function(){
@@ -31,10 +35,15 @@ function  viewText(id) {
     };
 }
 
+function viewTextInput(id){
+    this.id  = id;
+    this.doc = document.getElementById(this.id);  
+    this.getTxt = function(){
+        return this.doc.value;
+    };
+}
 
-
-
-function selectWiew(id){
+function wiewSelect(id){
 	this.id  = id;
     this.doc = document.getElementById(this.id);
 
@@ -61,7 +70,7 @@ function selectWiew(id){
     }
 }
 
-function checkBoxView(id){
+function wiewCheckBox(id){
 	this.id  = id;
     this.doc = document.getElementById(this.id);
 
@@ -75,11 +84,28 @@ function checkBoxView(id){
 }
 
 
-function divView(id){
+function wiewDiv(id){
 	this.id  = id;
     this.doc = document.getElementById(this.id);
 }
 
+
+function  registerEvent(id){
+    this.id  = id;
+    this.doc = document.getElementById(this.id);
+
+    this.ClickMouse= function( func){
+            this.doc.addEventListener("click", func); 
+    };
+
+    this.mouseOver= function( func){
+            this.doc.addEventListener("mouseover", func); 
+    };
+   
+    this.mouseOut= function( func){
+            this.doc.addEventListener("mouseout", func); 
+    };
+}
 
 function mouseScroll(id){
     this.id = id;

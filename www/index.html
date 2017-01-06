@@ -2,8 +2,6 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script  type="text/javascript" src="js/FileSaver.js" ></script>
 	<script  type="text/javascript" src="js/controller.js" ></script>
 	<script  type="text/javascript" src="js/controller.js" ></script>
@@ -18,46 +16,70 @@
 <body>
 	<div class="parent" >
 		<div class="left">
-			<div class="div1"  id="div_txt"  onmousemove="CallMouseMove()"   onmouseout="CallMouseOut()">
-				<pre id="idTextarea" ></pre>
+			<div class="div1"  			id="ID_View_Div_Logger_001" >
+				<pre 					id="ID_View_Txt_Logger_001" ></pre>  
 		 	</div>
-			<div class="div3" id="div_search" >
-				<img  class="image1" src="image/button/close.png"/> 
-				<pre id="idTextSearch" ></pre>
+			<div class="div3" 			id="ID_View_Div_Search_001" >
+				<pre  					id="ID_View_Txt_Search_001" ></pre>
 			</div>
 		</div>
-
 		<div class="right" >
-			<div class="div2">
-				<select id="mySelect"></select>  <br>
-				<input type="checkbox" id="checkbox"> info 
-				<input type="checkbox" id="checkbox1"> Warn <br>
-				<input type="text" id="idTxtInput"  onkeypress="handleKeyPress(event)" >  
-				<button type="button" onclick="clickButtonSearch()" > Search </button>
-			</div>
-			<div class="div0"  id="div_control" >
-				<button type="button" onclick="clickButtonStart()"> Start </button>
-				<button type="button" onclick="clickButtonStop()">  Stop </button>
-				<button type="button" onclick="clickButtonSave()"> Save </button>
-				<button type="button" onclick="clickButtonClear()"> Clear </button>
+			<div class="div2" 			id="ID-Configuration_Div_001">
+				<select   				id="ID_Configuration_SL_App_001"  ></select>  <br>
+				<input type="checkbox" 	id="ID_Configuration_CB_Info_001" > info 
+				<input type="checkbox" 	id="ID_Configuration_CB_Warn_001" > Warn
+				<input type="text" 		id="ID_Configuration_TXT_Search_001" onkeypress="handleKeyPress(event)" >  
+				<button type="button"	id="ID_Configuration_BT_Search_001" > Search </button>
+				<input type="text"		id="ID_Configuration_TXT_Filter_001" > 
+				<input type="text" 		id="ID_Configuration_TXT_CMD_001" > 
+			</div>	
+			<div class="div0"  			id="ID-Controller-div-001" >
+				<button type="button" 	id="ID_Controller_BT_Start_001" > Start </button>
+				<button type="button" 	id="ID_Controller_BT_Stop_001"  >  Stop </button>
+				<button type="button" 	id="ID_Controller_BT_Save_001" 	> Save </button>
+				<button type="button" 	id="ID_Controller_BT_Clear_001" > Clear </button>
 			</div>
 		</div>
 	</div>
 	<script>
 	    
-	    var myscroll = new mouseScroll("div_txt");
-	    var myview   = new viewText("idTextarea");
+	    var myscroll = new mouseScroll("ID_View_Div_Logger_001");
+	    var myview   = new viewTextOutput("ID_View_Txt_Logger_001");
 	    var mymodel  = new ModelText("/api");
 	    
-	    var myresults  = new viewText("idTextSearch");
-
+	    var myresults  = new viewTextOutput("ID_View_Txt_Search_001");
+        var searchview = new viewTextInput("ID_Configuration_TXT_Search_001")
 
 	    var myinfo   = new Info();
-	    var mydiv1   = new StypeTxt("div_txt");
-	    var mydiv3   = new StypeTxt("div_search");
-	   	mydiv1.setHight( (myinfo.getHeighOfScreen()*0.80) );
+	    var mydiv1   = new StypeTxt("ID_View_Div_Logger_001");
+	    var mydiv3   = new StypeTxt("ID_View_Div_Search_001");
+	   	mydiv1.setHight( (myinfo.getHeighOfScreen()*0.70) );
 	   	mydiv3.setHight( (myinfo.getHeighOfScreen()*0.15) );
-	   
+	     
+        var buton1 = new registerEvent("ID_Controller_BT_Start_001");
+        buton1.ClickMouse(clickButtonStart);
+
+
+        var buton2 = new registerEvent("ID_Controller_BT_Stop_001");
+        buton2.ClickMouse(clickButtonStop);
+
+
+        var buton3 = new registerEvent("ID_Controller_BT_Save_001");
+        buton3.ClickMouse(clickButtonSave);
+
+        var buton4 = new registerEvent("ID_Controller_BT_Clear_001");
+        buton4.ClickMouse(clickButtonClear);
+
+
+        var buton5 = new registerEvent("ID_Configuration_BT_Search_001");
+        buton5.ClickMouse(clickButtonSearch);
+        
+
+        var div1 = new registerEvent("ID_View_Div_Logger_001");
+        div1.mouseOver(CallMouseMove);
+        div1.mouseOut(CallMouseOut)
+  
+
 		var txt = "";
 		var flag = 1;
 		var num = 0;
@@ -97,9 +119,8 @@
 		
 
 		function clickButtonSearch(){
-			var doc = document.getElementById("idTxtInput")
-
-			 if(txt == "" || doc.value == "" ){
+            var key = searchview.getTxt() 
+			 if(txt == "" ||key  == "" ){
 			 	myresults.updateTxt("Not Found");
 			 	return;
 			 }
@@ -107,15 +128,14 @@
 	         myresults.updateTxt("search ....\n");
 			 
 			 
-			 if(doc.value != ""){
+			 if( key != ""){
 			 	var array = txt.split("\n");
 			 	var result = "";
 
 			 	for(i =0 ; i< array.length ; i++){
-			 			if(array[i].toUpperCase().indexOf(doc.value.toUpperCase()) >= 0)
-			 			{
-			 				result =result + array[i]  + "\n";
-			 			}
+		 			if(array[i].toUpperCase().indexOf( key.toUpperCase()) >= 0){
+		 				result =result + array[i]  + "\n";
+		 			}
 			 	}
 			 	myresults.updateTxt(result);
 			 }
