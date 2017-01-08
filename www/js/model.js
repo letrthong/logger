@@ -4,9 +4,9 @@ function ModelText(url){
 		return "ModelText";
 	};
 
-	this.httpRequest =function( line ) {
-		var d = new Date();
-		return  line.toString() + " " + d.toLocaleTimeString() + ": " + "ThongLT" +  "\n";
+	this.httpRequest =function() {
+		var  data = '{"proName": "gate", "type": "debug", "fileName": "json.cpp", "funcName": "parse","line": "100", "msg": "Hello" }';
+		return  data;
 	};
 }
 

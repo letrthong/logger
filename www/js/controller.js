@@ -81,11 +81,22 @@ function controllerStart() {
         if (flag != 0) {
             return;
         }
-
-        buffer += mymodel.httpRequest(num);
+        var response  = mymodel.httpRequest()
+        buffer += processData(response);
         num = num + 1;
     }
 
+
+    function processData(string){
+    	var myjson = new stringToLogger(string);
+    	//Check filters;
+		var  data = myjson.getString();
+		
+    	var d = new Date();
+		
+		return  num.toString() + " " + d.toLocaleTimeString() + ": " +  data +  "\n";
+    }
+    
     function clickButtonStart() {
         flag = 0;
     }
