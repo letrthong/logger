@@ -14,6 +14,14 @@ function  viewTextOutput(id) {
         }
     };
 
+    this.appendTxt = function(txt){
+        if (txt) {
+            this.setTxt( this.getTxt() + txt);
+            this.showTxt();
+            this.pre_txt = this.txt
+         }
+    };
+
     this.setTxt = function(txt){
         this.txt =txt;
     };
