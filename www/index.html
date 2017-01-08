@@ -24,9 +24,13 @@
         </div>
         <div class="right">
             <div class="div0" id="ID-Configuration_Div_001">
-                <select id="ID_Configuration_SL_App_001"></select> <br>
+            	Processes <br>
+                <select id="ID_Configuration_SL_App_001"></select> <br><br>
+                Types <br>
+                <input type="checkbox" id="ID_Configuration_CB_All_001"> All
                 <input type="checkbox" id="ID_Configuration_CB_Info_001"> info
-                <input type="checkbox" id="ID_Configuration_CB_Warn_001"> Warn <br>
+                <input type="checkbox" id="ID_Configuration_CB_Warn_001"> Warn
+                <input type="checkbox" id="ID_Configuration_CB_Error_001"> Error <br> <br>
                 <input type="text" id="ID_Configuration_TXT_Search_001">
                 <button type="button" id="ID_Configuration_BT_Search_001"> Search </button>
                 <br>Filter<br>
@@ -39,11 +43,11 @@
                 <button type="button" id="ID_Controller_BT_Stop_001">  Stop </button> <br><br>
                 <button type="button" id="ID_Controller_BT_Save_001"> Save </button>
                 <button type="button" id="ID_Controller_BT_Clear_001"> Clear </button>
-            </div>
+            </div> 
         </div>
     </div>
     <script>
-        start();
+        controllerStart();
     </script>
 </body>
 </html>

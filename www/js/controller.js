@@ -1,4 +1,4 @@
-function ControllerText() {
+function controllerText() {
     this.getData = function(id) {
         var view = new viewText("demo");
         var model = new ModelText("")
@@ -13,8 +13,20 @@ function ControllerText() {
 }
 
 
-function start() {
+function  controllerUpdateSelet(){
+    var array  = new  ModelSceense001Configure("/api/config/select");
+    viewSelectInitSceense001(array.getSelect());
+}
 
+function controllerUpdateCheckBox(){
+
+}
+
+function controllerStart() {
+
+	StypeLeftSceense001();
+    controllerUpdateSelet();
+    controllerUpdateCheckBox();
 
     var myscroll = new mouseScroll("ID_View_Div_Logger_001");
     var myview = new viewTextOutput("ID_View_Txt_Logger_001");
@@ -23,15 +35,10 @@ function start() {
     var myresults = new viewTextOutput("ID_View_Txt_Search_001");
     var searchview = new viewTextInput("ID_Configuration_TXT_Search_001")
 
-    var myinfo = new Info();
-    var mydiv1 = new StypeTxt("ID_View_Div_Logger_001");
-    var mydiv3 = new StypeTxt("ID_View_Div_Search_001");
-    mydiv1.setHight((myinfo.getHeighOfScreen() * 0.70));
-    mydiv3.setHight((myinfo.getHeighOfScreen() * 0.15));
+   
 
     var buton1 = new registerEvent("ID_Controller_BT_Start_001");
     buton1.ClickMouse(clickButtonStart);
-
 
     var buton2 = new registerEvent("ID_Controller_BT_Stop_001");
     buton2.ClickMouse(clickButtonStop);
@@ -64,8 +71,10 @@ function start() {
             myscroll.setscrollTop(num);
         }
 
-        myview.appendTxt(buffer);
-        buffer ="";
+        if(buffer){
+        	myview.appendTxt(buffer);
+       		buffer ="";
+        }
     }
 
     function myTimer() {

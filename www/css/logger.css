@@ -37,7 +37,7 @@ div.right{
 /*right*/
 .div0 { 
     width: 100%;
-    height: 250px;
+    height: 600px;
     top: 10px;
     right: 10px;   
     position: absolute; 
@@ -48,7 +48,7 @@ div.right{
 .div2{
     width: 100%;
     height: 200px; 
-    top: 350px;
+    top: 650px;
     right: 10px;
     position: absolute;
     border-style: solid;

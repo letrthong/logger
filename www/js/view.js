@@ -143,3 +143,9 @@ function mouseScroll(id){
          this.move = 0;
      };
 }
+
+
+function viewSelectInitSceense001(array){
+    var process = new wiewSelect("ID_Configuration_SL_App_001");
+    process.InitOption(array);
+}

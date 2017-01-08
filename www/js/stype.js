@@ -37,3 +37,12 @@ function StypeTxt(id){
 		this.doc.style.overflow = "scroll";
 	}
 }
+
+
+function StypeLeftSceense001(){
+	var myinfo = new Info();
+    var mydiv1 = new StypeTxt("ID_View_Div_Logger_001");
+    var mydiv3 = new StypeTxt("ID_View_Div_Search_001");
+    mydiv1.setHight((myinfo.getHeighOfScreen() * 0.70));
+    mydiv3.setHight((myinfo.getHeighOfScreen() * 0.15));
+}
